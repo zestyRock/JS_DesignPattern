@@ -1,0 +1,72 @@
+<html>
+
+<head>
+  <script>
+    var mom = function () {
+      var kids = new Array();
+
+      return {
+        subscribeKid: function (kid) {
+          //new subscriber is pushed to array
+          kids.push(kid);
+        },
+        unsubscribeKid: function (kid) {
+          //get the kid index
+          var idx = kids.indexOf(kid);
+          if (idx !== -1) {
+            //remove this element from array kids
+            kids.splice(kid, 1);
+          }
+        },
+        notifyAllKids: function () {
+          if (kids.length > 0) {
+            for (var i = 0; i < kids.length; i++) {
+              kids[i].notify(kids[i].getName());
+            }
+          }
+        },
+        notifyKid: function (kid) {
+          var idx = kids.indexOf(kid);
+          if (idx !== -1) {
+            //remove this element from array kids
+            kids[idx].notify(kids[idx].getName());
+          }
+        }
+      };
+    };
+
+    var kid = function (nameVal) {
+      //we put the name as private...
+      var name = nameVal;
+      return {
+        notify: function (name) {
+          console.log(name + " : The dinner is tasty!!");
+        },
+        getName: function () {
+          return name;
+        }
+      };
+    }
+
+    var Annie = new mom();
+
+    var emma = new kid("emma");
+    var christina = new kid("christina");
+
+    Annie.subscribeKid(emma);
+    Annie.subscribeKid(christina);
+
+    //result: emma : The dinner is tasty!!
+    Annie.notifyKid(emma);
+
+    //emma : The dinner is tasty!!
+    //christina : The dinner is tasty!!
+    Annie.notifyAllKids();
+  </script>
+</head>
+
+<body>
+  <h1>Open your console to see the result</h1>
+</body>
+
+</html>
